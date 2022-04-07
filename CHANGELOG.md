@@ -57,7 +57,7 @@ The full list of additional features and bug fixes can be found below.
 * restapi/client: support querying status for multiple CIDs | [ipfs/ipfs-cluster#1564](https://github.com/ipfs/ipfs-cluster/issues/1564) | [ipfs/ipfs-cluster#1592](https://github.com/ipfs/ipfs-cluster/issues/1592)
 * Pinning Services API | [ipfs/ipfs-cluster#1213](https://github.com/ipfs/ipfs-cluster/issues/1213) | [ipfs/ipfs-cluster#1483](https://github.com/ipfs/ipfs-cluster/issues/1483)
 * restapi/adder: Return pin allocations on add output | [ipfs/ipfs-cluster#1598](https://github.com/ipfs/ipfs-cluster/issues/1598) | [ipfs/ipfs-cluster#1599](https://github.com/ipfs/ipfs-cluster/issues/1599)
-* RPC Streaming | [ipfs/ipfs-cluster#1602](https://github.com/ipfs/ipfs-cluster/issues/1602) | [ipfs/ipfs-cluster#1607](https://github.com/ipfs/ipfs-cluster/issues/1607) | [ipfs/ipfs-cluster#1611](https://github.com/ipfs/ipfs-cluster/issues/1611) | [ipfs/ipfs-cluster#810](https://github.com/ipfs/ipfs-cluster/issues/810) | [ipfs/ipfs-cluster#1437](https://github.com/ipfs/ipfs-cluster/issues/1437) | [ipfs/ipfs-cluster#1616](https://github.com/ipfs/ipfs-cluster/issues/1616)
+* RPC Streaming | [ipfs/ipfs-cluster#1602](https://github.com/ipfs/ipfs-cluster/issues/1602) | [ipfs/ipfs-cluster#1607](https://github.com/ipfs/ipfs-cluster/issues/1607) | [ipfs/ipfs-cluster#1611](https://github.com/ipfs/ipfs-cluster/issues/1611) | [ipfs/ipfs-cluster#810](https://github.com/ipfs/ipfs-cluster/issues/810) | [ipfs/ipfs-cluster#1437](https://github.com/ipfs/ipfs-cluster/issues/1437) | [ipfs/ipfs-cluster#1616](https://github.com/ipfs/ipfs-cluster/issues/1616) | @1621
 
 ##### Bug fixes
 
@@ -65,13 +65,13 @@ The full list of additional features and bug fixes can be found below.
 
 * pubsubmon: Remove accrual failure detection | [ipfs/ipfs-cluster#939](https://github.com/ipfs/ipfs-cluster/issues/939) | [ipfs/ipfs-cluster#1586](https://github.com/ipfs/ipfs-cluster/issues/1586) | [ipfs/ipfs-cluster#1589](https://github.com/ipfs/ipfs-cluster/issues/1589)
 * crdt: log with INFO when batches are committed | [ipfs/ipfs-cluster#1596](https://github.com/ipfs/ipfs-cluster/issues/1596)
-* Dependency upgrades | [ipfs/ipfs-cluster#1613](https://github.com/ipfs/ipfs-cluster/issues/1613) | [ipfs/ipfs-cluster#1617](https://github.com/ipfs/ipfs-cluster/issues/1617)
+* Dependency upgrades | [ipfs/ipfs-cluster#1613](https://github.com/ipfs/ipfs-cluster/issues/1613) | [ipfs/ipfs-cluster#1617](https://github.com/ipfs/ipfs-cluster/issues/1617) | @1627
 * Bump RPC protocol version | [ipfs/ipfs-cluster#1615](https://github.com/ipfs/ipfs-cluster/issues/1615)
-
+* Replace cid.Cid with api.Cid wrapper type | @1626
 
 #### Upgrading notices
 
-As mentioned, all peers in the cluster should upgrade.
+As mentioned, all peers in the cluster should upgrade and things will heavily break otherwise.
 
 ##### Configuration changes
 
@@ -88,14 +88,32 @@ There are no breaking configuration changes. Other than that:
 
 ##### REST API
 
-Regading endpoints behaviour changes:
+###### Streaming responses
+
+The following endpoint responses have changed:
 
 * `/allocations` returned a json array of api.Pin object and now it will stream them.
 * `/pins` returned a json array of api.PinInfo objects and now it will stream them.
 * `/recover` returned a json array of api.PinInfo objects and now it will stream them.
 
 Failures on streaming endpoints are captured in request Trailer headers (same
-as `/add`), in particular with a `X-Stream-Error` trailer.
+as `/add`), in particular with a `X-Stream-Error` trailer. Note that the
+`X-Stream-Error` trailer may appear even no error happened (empty value in
+this case).
+
+###### JSON-encoding of CIDs
+
+As of v1.0.0, every "cid" as returned inside any REST API object will no
+longer encode as:
+
+```
+{ "/" : "<cid>" }
+```
+
+but instead just as `"cid"`.
+
+###### Add endpoint changes
+
 
 There are two small backwards compatible changes to the `/add` endpoint:
 
@@ -104,6 +122,8 @@ the content after having added it.
 * The output objects returned when adding (i.e. the ones containing the CIDs
   of the files) now include an `Allocations` field, with an array of peer IDs
   corresponding to the peers on which the blocks were added.
+
+####### PinInfo object changes
 
 Additionally, `PinInfo`/`GlobalPinInfo` objects (returned from `/pins` and `/recover` endpoitns), now
 include additional fields (which before were only accessible via `/allocations`):
