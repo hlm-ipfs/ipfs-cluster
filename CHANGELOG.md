@@ -124,13 +124,13 @@ the content after having added it.
   of the files) now include an `Allocations` field, with an array of peer IDs
   corresponding to the peers on which the blocks were added.
 
-####### Pin object changes
+###### Pin object changes
 
 `Pin` objects (returned from `/allocations`, `POST /pins` etc). will not
 encode the Type as a human-readable string and not as a number, as previously
 happened.
 
-####### PinInfo object changes
+###### PinInfo object changes
 
 `PinInfo`/`GlobalPinInfo` objects (returned from `/pins` and `/recover` endpoitns), now
 include additional fields (which before were only accessible via `/allocations`):
