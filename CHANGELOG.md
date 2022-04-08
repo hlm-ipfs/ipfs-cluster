@@ -4,7 +4,7 @@
 
 IPFS Cluster v1.0.0 is a major release that represents that this project has
 reached maturity and is able to perform and scale on production environment
-(50+ pins and 20 nodes).
+(50+ million pins and 20 nodes).
 
 This is a breaking release, v1.0.0 cluster peers are not compatible with
 previous cluster peers as we have bumped the RPC protocol version (which had
