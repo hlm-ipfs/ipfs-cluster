@@ -57,7 +57,7 @@ The full list of additional features and bug fixes can be found below.
 * restapi/client: support querying status for multiple CIDs | [ipfs/ipfs-cluster#1564](https://github.com/ipfs/ipfs-cluster/issues/1564) | [ipfs/ipfs-cluster#1592](https://github.com/ipfs/ipfs-cluster/issues/1592)
 * Pinning Services API | [ipfs/ipfs-cluster#1213](https://github.com/ipfs/ipfs-cluster/issues/1213) | [ipfs/ipfs-cluster#1483](https://github.com/ipfs/ipfs-cluster/issues/1483)
 * restapi/adder: Return pin allocations on add output | [ipfs/ipfs-cluster#1598](https://github.com/ipfs/ipfs-cluster/issues/1598) | [ipfs/ipfs-cluster#1599](https://github.com/ipfs/ipfs-cluster/issues/1599)
-* RPC Streaming | [ipfs/ipfs-cluster#1602](https://github.com/ipfs/ipfs-cluster/issues/1602) | [ipfs/ipfs-cluster#1607](https://github.com/ipfs/ipfs-cluster/issues/1607) | [ipfs/ipfs-cluster#1611](https://github.com/ipfs/ipfs-cluster/issues/1611) | [ipfs/ipfs-cluster#810](https://github.com/ipfs/ipfs-cluster/issues/810) | [ipfs/ipfs-cluster#1437](https://github.com/ipfs/ipfs-cluster/issues/1437) | [ipfs/ipfs-cluster#1616](https://github.com/ipfs/ipfs-cluster/issues/1616) | [ipfs/ipfs-cluster#1621](https://github.com/ipfs/ipfs-cluster/issues/1621)
+* RPC Streaming | [ipfs/ipfs-cluster#1602](https://github.com/ipfs/ipfs-cluster/issues/1602) | [ipfs/ipfs-cluster#1607](https://github.com/ipfs/ipfs-cluster/issues/1607) | [ipfs/ipfs-cluster#1611](https://github.com/ipfs/ipfs-cluster/issues/1611) | [ipfs/ipfs-cluster#810](https://github.com/ipfs/ipfs-cluster/issues/810) | [ipfs/ipfs-cluster#1437](https://github.com/ipfs/ipfs-cluster/issues/1437) | [ipfs/ipfs-cluster#1616](https://github.com/ipfs/ipfs-cluster/issues/1616) | [ipfs/ipfs-cluster#1621](https://github.com/ipfs/ipfs-cluster/issues/1621) | [ipfs/ipfs-cluster#1631](https://github.com/ipfs/ipfs-cluster/issues/1631)
 
 ##### Bug fixes
 
@@ -114,7 +114,6 @@ longer encode as:
 but instead just as `"cid"`.
 
 ###### Add endpoint changes
-
 
 There are two small backwards compatible changes to the `/add` endpoint:
 
