@@ -69,6 +69,7 @@ The full list of additional features and bug fixes can be found below.
 * Bump RPC protocol version | [ipfs/ipfs-cluster#1615](https://github.com/ipfs/ipfs-cluster/issues/1615)
 * Replace cid.Cid with api.Cid wrapper type | [ipfs/ipfs-cluster#1626](https://github.com/ipfs/ipfs-cluster/issues/1626)
 * Provide string JSON marshalling for PinType | [ipfs/ipfs-cluster#1628](https://github.com/ipfs/ipfs-cluster/issues/1628)
+* ipfs-cluster-ctl should exit with status 1 when an argument error happens | [ipfs/ipfs-cluster#1633](https://github.com/ipfs/ipfs-cluster/issues/1633) | [ipfs/ipfs-cluster#1634](https://github.com/ipfs/ipfs-cluster/issues/1634)
 
 #### Upgrading notices
 
