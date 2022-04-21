@@ -16,7 +16,7 @@ COPY  ./bin/ipfs-cluster-ctl /usr/local/bin/ipfs-cluster-ctl
 COPY  ./bin/ipfs-cluster-follow /usr/local/bin/ipfs-cluster-follow
 COPY  ./docker/entrypoint.sh  /usr/local/bin/entrypoint.sh
 
-RUN mkdir -p $IPFS_CLUSTER_PATH && adduser --disabled-login --disabled-password $IPFS_CLUSTER_PATH -u 1000 -G users ipfs && chown ipfs:users $IPFS_CLUSTER_PATH
+RUN mkdir -p $IPFS_CLUSTER_PATH && adduser --disabled-login $IPFS_CLUSTER_PATH -u 1000 -G users ipfs && chown ipfs:users $IPFS_CLUSTER_PATH
 
 VOLUME $IPFS_CLUSTER_PATH
 ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/entrypoint.sh"]
