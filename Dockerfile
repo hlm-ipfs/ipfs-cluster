@@ -14,12 +14,10 @@ EXPOSE 9096
 COPY  ./bin/ipfs-cluster-service /usr/local/bin/ipfs-cluster-service
 COPY  ./bin/ipfs-cluster-ctl /usr/local/bin/ipfs-cluster-ctl
 COPY  ./bin/ipfs-cluster-follow /usr/local/bin/ipfs-cluster-follow
-COPY   ./docker/entrypoint.sh  /usr/local/bin/entrypoint.sh
+COPY  ./docker/entrypoint.sh  /usr/local/bin/entrypoint.sh
 
-RUN mkdir -p $IPFS_CLUSTER_PATH && \
-    adduser -D -h $IPFS_CLUSTER_PATH -u 1000 -G users ipfs && \
-    chown ipfs:users $IPFS_CLUSTER_PATH \
-    
+RUN mkdir -p $IPFS_CLUSTER_PATH && adduser -D -h $IPFS_CLUSTER_PATH -u 1000 -G users ipfs && chown ipfs:users $IPFS_CLUSTER_PATH
+
 VOLUME $IPFS_CLUSTER_PATH
 ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/entrypoint.sh"]
 
