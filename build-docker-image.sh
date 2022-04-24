@@ -1,6 +1,6 @@
 # declare
 export GROUP_NAME=ipfs2021
-export PROJECT_NAME=ipfs-cluser
+export PROJECT_NAME=ipfs-cluster
 
 # build
 GOOS=linux go build  -o ./bin/ipfs-cluster-service ./cmd/ipfs-cluster-service
