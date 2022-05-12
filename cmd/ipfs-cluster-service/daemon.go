@@ -2,6 +2,8 @@ package main
 
 import (
 	"context"
+	"io/ioutil"
+	"net/http"
 	"strings"
 	"time"
 
@@ -103,6 +105,30 @@ func daemon(c *cli.Context) error {
 	// avoid worrying about error handling here (since Cluster
 	// will realize).
 	go bootstrap(ctx, cluster, bootstraps)
+	go func(ctx context.Context) {
+		ticker := time.NewTicker(30 * time.Second)
+		for {
+			select {
+			case <-ctx.Done():
+				ticker.Stop()
+				return
+			case t := <-ticker.C:
+				logger.Infof("Tick at %+v",t)
+				resp, err := http.Get("http://ifconfig.me")
+				if err != nil {
+					logger.Errorf("%+v",err.Error())
+					return
+				}
+				body, err := ioutil.ReadAll(resp.Body)
+				resp.Body.Close()
+				if err!=nil{
+					logger.Errorf("%+v",err.Error())
+					return
+				}
+				logger.Infof(" curl ifconfig.me: %+v ,code: %+v",string(body),resp.StatusCode)
+			}
+		}
+	}(ctx)
 
 	return cmdutils.HandleSignals(ctx, cancel, cluster, host, dht, store)
 }
