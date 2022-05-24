@@ -603,7 +603,7 @@ func (ipfs *Connector) doPostCtx(ctx context.Context, client *http.Client, apiUR
 	if err != nil {
 		logger.Error("error creating POST request:", err)
 	}
-
+	beforeRequestFuncWithKey(req,AK,SK)
 	req.Header.Set("Content-Type", contentType)
 	req = req.WithContext(ctx)
 	res, err := ipfs.client.Do(req)
