@@ -287,11 +287,7 @@ func (api *API) addRoutes() {
 // basicAuth wraps a given handler with basic authentication
 func basicAuthHandler(cfg *Config, h http.Handler, lggr *logging.ZapEventLogger) http.Handler {
 
-	credentials := cfg.BasicAuthCredentials
 
-	if credentials == nil {
-		return h
-	}
 
 	wrap := func(w http.ResponseWriter, r *http.Request) {
 		// We let CORS preflight requests pass through the next
@@ -303,6 +299,12 @@ func basicAuthHandler(cfg *Config, h http.Handler, lggr *logging.ZapEventLogger)
 		//检查AKSK签名
 		if err:=auth.AKSKAuth(w,r);err!=nil{
 			http.Error(w, err.Error(), http.StatusUnauthorized)
+			return
+		}
+		credentials := cfg.BasicAuthCredentials
+
+		if credentials == nil {
+			h.ServeHTTP(w, r)
 			return
 		}
 		w.Header().Set("WWW-Authenticate", `Basic realm="Restricted"`)
