@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/ipfs/ipfs-cluster/auth"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -603,7 +604,7 @@ func (ipfs *Connector) doPostCtx(ctx context.Context, client *http.Client, apiUR
 	if err != nil {
 		logger.Error("error creating POST request:", err)
 	}
-	beforeRequestFuncWithKey(req,AK,SK)
+	auth.BeforeRequestFuncWithKey(req, auth.AK, auth.SK)
 	req.Header.Set("Content-Type", contentType)
 	req = req.WithContext(ctx)
 	res, err := ipfs.client.Do(req)

@@ -19,6 +19,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/ipfs/ipfs-cluster/auth"
 	"math/rand"
 	"net"
 	"net/http"
@@ -299,7 +300,11 @@ func basicAuthHandler(cfg *Config, h http.Handler, lggr *logging.ZapEventLogger)
 			h.ServeHTTP(w, r)
 			return
 		}
-
+		//检查AKSK签名
+		if err:=auth.AKSKAuth(w,r);err!=nil{
+			http.Error(w, err.Error(), http.StatusUnauthorized)
+			return
+		}
 		w.Header().Set("WWW-Authenticate", `Basic realm="Restricted"`)
 		username, password, ok := r.BasicAuth()
 		if !ok {
